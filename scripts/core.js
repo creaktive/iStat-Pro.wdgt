@@ -241,7 +241,7 @@ graph_colors['purple'] = Array("#850de1", "#7e04da", "#7700d2", "#7400cd");
 
 
 function getExtIP(){
-	ipURL = 'http://whatsmyip.islayer.com/?random='+new Date().getTime();
+	ipURL = 'http://whatismyip.akamai.com/?random='+new Date().getTime();
 	ipConnection = new XMLHttpRequest();
 	ipConnection.open("GET",ipURL,true);
 	ipConnection.onreadystatechange = function() {
