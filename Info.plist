@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>AllowFullAccess</key>
+	<true/>
+	<key>AllowMultipleInstances</key>
+	<false/>
+	<key>CFBundleIdentifier</key>
+	<string>com.iSlayer.iStatpro4.widget</string>
+	<key>CFBundleName</key>
+	<string>iStat Pro</string>
+	<key>CFBundleShortVersionString</key>
+	<string>4.92</string>
+	<key>CFBundleVersion</key>
+	<string>4.92</string>
+	<key>CloseBoxInsetX</key>
+	<integer>1</integer>
+	<key>CloseBoxInsetY</key>
+	<integer>3</integer>
+	<key>Height</key>
+	<integer>130</integer>
+	<key>MainHTML</key>
+	<string>iStatpro.html</string>
+	<key>Plugin</key>
+	<string>iStatPro.bundle</string>
+	<key>Width</key>
+	<integer>380</integer>
+</dict>
+</plist>

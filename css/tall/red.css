@@ -1,0 +1,23 @@
+.top {
+	background-image:url(../../images/skin_tall/skin_red/tall_header.png);
+	width:164px;
+	height:23px;
+}
+
+.header {
+	color:#D10027;
+}
+
+.draghandlenewpos {
+	background-image:url(../../images/skin_tall/skin_red/tall_dragnewposition.png);
+}
+
+.graphbar {
+	background-image:url(../../images/common/bar_horizontal_white.png);
+	height:8px;
+}
+
+.verticalbar {
+	background-image:url(../../images/common/bar_vertical_white.png);
+	width:8px;	
+}

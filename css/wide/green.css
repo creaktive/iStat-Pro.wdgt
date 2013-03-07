@@ -1,0 +1,23 @@
+.leftcap {
+	background-image:url(../../images/skin_wide/skin_green/wide_header.png);
+	width:29px;
+	height:130px;
+	float:left;
+	position:absolute;
+	left:0px;
+	top:0px;
+}
+
+.header {
+	color:#92D100;
+}
+
+.draghandlenewpos {
+	background-image:url(../../images/skin_wide/skin_green/wide_dragnewposition.png);
+}
+
+.graphbar {
+	background-image:url(../../images/common/bar_horizontal_white.png);
+	width:80px;
+	height:8px;
+}

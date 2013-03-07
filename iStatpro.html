@@ -1,0 +1,726 @@
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+	<style>
+		body, html {
+			margin: 0px;
+			padding: 0px;
+			color: white;
+			font-family: "Lucida Grande";
+			font-size: 10px;
+			font-weight: bold;
+		}
+		div {
+			color: white;
+			font-family: "Lucida Grande";
+			font-size: 10px;
+			font-weight: bold;			
+		}
+		span {
+			font-family: "Lucida Grande";
+			font-size: 10px;
+			font-weight: bold;			
+		}
+	</style>
+	<meta http-equiv="content-type" content="text/html; charset=utf-8" />
+	<link href="core.css" rel="stylesheet" type="text/css" />
+	<link id='skin_sheet' href="" rel="stylesheet" type="text/css" />
+	<link id='color_sheet' href="./css/wide/grey.css" rel="stylesheet" type="text/css" />
+	<script src='Animator.js'></script>
+	<script src='AnimationObject.js'></script>
+	<script src='./scripts/prefs.js'></script>
+	<script src='./scripts/core.js'></script>
+	<script type='text/javascript' src='./AppleClasses/AppleScrollArea.js' charset='utf-8'/>
+	<script type='text/javascript' src='./AppleClasses/AppleScrollbar.js' charset='utf-8'/>
+	<script src='./scripts/display_prefs.js'></script>
+	<script type="text/javascript" src="scripts/dash.js"></script>
+	<script src='./scripts/dragTall.js'></script>
+	<script src='./scripts/dragWide.js'></script>
+	<script src='DiskObject.js'></script>
+	<script src='NetworkObject.js'></script>
+	<script src='Tall.js'></script>
+	<script src='Wide.js'></script>
+	<script src='Workers.js'></script>
+	<script src='./scripts/updater.js'></script>
+	<script>
+		p = new PrefsController();
+		tdc = new TallDragController();
+		wdc = new WideDragController();
+		tsk = new TallSkinController();
+		wsk = new WideSkinController();
+		dc = new DisplayPreferenceController();
+		core = new ISPCore();
+		upd = new UpdateController();
+	</script>
+</head>
+<body onload="setup();">
+
+<div id="front">
+	<div id="tallSettingsButton" style='background-image:url(./images/tooltips/tooltip_tall_settings.png);width:171px;height:24px;position:absolute;top:0px;left:118px;display:none;'></div>
+	<div id="tallHelpButton" style='background-image:url(./images/tooltips/tooltip_tall_help.png);width:171px;height:24px;position:absolute;top:0px;left:118px;display:none;'></div>
+	<div id="tallActivityMonButton" style='background-image:url(./images/tooltips/tooltip_tall_activitymon.png);width:171px;height:24px;position:absolute;top:0px;left:118px;display:none;'></div>
+	<div id="talliPhoneButton" style='background-image:url(./images/tooltips/tooltip_tall_iphone.png);width:171px;height:24px;position:absolute;top:0px;left:116px;display:none;'></div>
+	<div id='tall_window' style='display:none;top:21px;position:absolute;left:130px'>
+		<div id='tall_iphone_window' style='z-index:1001;position:absolute;left:6px;display:none;'>
+			<div style='width:152px;position:relative;'>
+				<img src='./images/windows/window_tall_iphone.png' />
+				<div style="top:89px;left:12px;position:absolute;">
+					<div id="iphoneinfobutton" onclick='widget.openURL("http://bjango.com/apps/istat/ext/isp/");hideiPhoneWindow()'></div>
+					<div id="iphoneok" onclick='hideiPhoneWindow()'></div>
+				</div>
+			</div>
+		</div>
+		<div id='tall_update_window_new' style='z-index:1001;position:absolute;left:6px;display:none;'>
+			<div style='width:152px;position:relative;'>
+				<img src='./images/windows/window_tall_update.png' />
+				<div style="top:89px;left:10px;position:absolute;">
+					<div id="skip" onclick='upd.skip()'></div>
+					<div id="no" onclick='upd.hide()'></div>
+					<div id="yes" onclick='widget.openURL("http://www.islayer.com/apps/istatpro/");upd.hide()'></div>
+				</div>
+			</div>
+		</div>
+		<div id='tall_intelinstall_window' style='z-index:999;position:absolute;left:6px;display:none;'>
+			<div style='width:152px;position:relative;'>
+				<img src='./images/windows/window_tall_install.png' />
+				<div style="top:89px;left:12px;position:absolute;">
+					<div id="no" onclick='h("tall_intelinstall_window")'></div>
+					<div id="yes" onclick='widget.openURL("");iStatPro.installIntelModule();h("tall_intelinstall_window")'></div>
+				</div>
+			</div>
+		</div>
+		<div id='talldragmask' class='draghandleMask' style='left:10px;z-index:1000;top:5px;'></div>
+		<div class='draghandlenewpos' id='talldraghandlenewpos'></div>
+
+		<div class='top' style="position:absolute;top:0px;">
+			<img onmouseover="this.src='./images/skin_tall/tall_prefs_rollie.png';showTooltip('tallSettingsButton')" onmouseout="this.src='./images/skin_tall/tall_prefs.png';hideTooltip('tallSettingsButton')"  onclick='this.src="./images/skin_tall/tall_prefs.png";p.showBack()' src='./images/skin_tall/tall_prefs.png' style='cursor:pointer;height:19px;width:26px;position:absolute;top:4px;left:10px;' />
+			<img onmouseover="this.src='./images/skin_tall/tall_help_rollie.png';showTooltip('tallHelpButton')" onmouseout="this.src='./images/skin_tall/tall_help.png';hideTooltip('tallHelpButton')"  onclick='widget.openURL("http://islayer.com/support/?p=24")' src='./images/skin_tall/tall_help.png' style='cursor:pointer;height:19px;width:26px;position:absolute;top:4px;left:36px;' />
+			<img onmouseover="this.src='./images/skin_tall/tall_activitymon_rollie.png';showTooltip('tallActivityMonButton')" onmouseout="this.src='./images/skin_tall/tall_activitymon.png';hideTooltip('tallActivityMonButton')"  onclick='widget.openApplication("com.apple.activitymonitor")' src='./images/skin_tall/tall_activitymon.png' style='cursor:pointer;height:19px;width:26px;position:absolute;top:4px;left:62px;' />
+			<img onmouseover="this.src='./images/skin_tall/tall_iphone_rollie.png';showTooltip('talliPhoneButton')" onmouseout="this.src='./images/skin_tall/tall_iphone.png';hideTooltip('talliPhoneButton')"  onclick='widget.openURL("http://bjango.com/apps/istat/ext/isp/")' src='./images/skin_tall/tall_iphone.png' style='cursor:pointer;height:19px;width:26px;position:absolute;top:4px;left:88px;' />
+			<img id='tall_ipcopied' src='./images/IP_copied.png' style='position:absolute;left:115px;top:6px;display:none;' />
+		</div>
+		<div id='tallContentContainer' class='' style='height:108px;top:23px;background-image:url(./images/skin_tall/tall_mid_background.png);position:absolute;width:164px;overflow:hidden;'>
+			<div id="tallDragFiller" style='height:8px;top:0px;position:absolute;width:164px;z-index:49;display:none'>
+				<div id="tallDragFillerBackground" style='position:absolute;top:10px;background-image:url(./images/skin_tall/tall_mid_section.png);width:164px;height:10px;'></div>
+				<div style='position:absolute;top:0px;background-image:url(./images/skin_tall/drag-shadow-top.png);width:144px;height:10px;left:10px;'></div>
+				<div style='position:absolute;bottom:0px;background-image:url(./images/skin_tall/drag-shadow-bottom.png);width:144px;height:10px;left:10px;'></div>
+			</div>
+			<div style='height:8px;top:0px;background-image:url(./images/skin_tall/tall_mid_section.png);position:absolute;width:164px;overflow:hidden;'></div>
+			<div id='tall_cpu' onmouseover="tdc.showHandle('CPU')" onmouseout="tdc.hideHandle('CPU')" class='sectioncontainer' style='height:34px;position:absolute;top:0px;'>
+				<div id='tallDragHandleCPU' onmousedown="tdc.startDrag(event, 'cpu')" class='draghandle' style='cursor:pointer;left:126px;z-index:1000;display:none;'></div>
+				<div class='header'>cpu</div>
+				<div class='header'>cpu</div>
+				<div style='width:63px;left:20px;' class='line line1 ellipsis'><span style='color: #838383;'>User: </span><span id='tall_cpu_user'>0</span>%</div>
+				<div style='width:63px;left:84px;' class='line line1 ellipsis'><span style='color: #838383;'>Sys: </span><span id='tall_cpu_system'>0</span>%</div>
+				<div style='width:63px;left:20px;' class='line line2 ellipsis'><span style='color: #838383;'>Nice: </span><span id='tall_cpu_nice'>0</span>%</div>
+				<div style='width:63px;left:84px;' class='line line2 ellipsis'><span style='color: #838383;'>Idle: </span><span id='tall_cpu_idle'>0</span>%</div>
+	
+				<div style='position:absolute;left:20px;top:39px;' id='tall_cpu_graph_container'>
+					<div id='tall_cpu_bars_4' style='display:none;'>
+						<div style='position:absolute;top:0px;left:0px;width:125px;' class='barbg'><div id='tall_cpu_4bar_0' class='graphbar'></div></div>
+						<div style='position:absolute;top:9px;left:0px;width:125px;' class='barbg'><div id='tall_cpu_4bar_1' class='graphbar'></div></div>
+						<div style='position:absolute;top:18px;left:0px;width:125px;' class='barbg'><div id='tall_cpu_4bar_2' class='graphbar'></div></div>
+						<div style='position:absolute;top:27px;left:0px;width:125px;' class='barbg'><div id='tall_cpu_4bar_3' class='graphbar'></div></div>
+					</div>
+					<div id='tall_cpu_bars_8' style='display:none;'>
+						<div style='position:absolute;top:0px;left:0px;width:61px;' class='barbg'><div id='tall_cpu_8bar_0' class='graphbar'></div></div>
+						<div style='position:absolute;top:9px;left:0px;width:61px;' class='barbg'><div id='tall_cpu_8bar_1' class='graphbar'></div></div>
+						<div style='position:absolute;top:18px;left:0px;width:61px;' class='barbg'><div id='tall_cpu_8bar_2' class='graphbar'></div></div>
+						<div style='position:absolute;top:27px;left:0px;width:61px;' class='barbg'><div id='tall_cpu_8bar_3' class='graphbar'></div></div>
+						<div style='position:absolute;top:0px;left:64px;width:61px;' class='barbg'><div id='tall_cpu_8bar_4' class='graphbar'></div></div>
+						<div style='position:absolute;top:9px;left:64px;width:61px;' class='barbg'><div id='tall_cpu_8bar_5' class='graphbar'></div></div>
+						<div style='position:absolute;top:18px;left:64px;width:61px;' class='barbg'><div id='tall_cpu_8bar_6' class='graphbar'></div></div>
+						<div style='position:absolute;top:27px;left:64px;width:61px;' class='barbg'><div id='tall_cpu_8bar_7' class='graphbar'></div></div>
+					</div>
+					<div id='tall_cpu_bars_16' style='display:none;'>
+						<div style='position:absolute;top:0px;left:0px;width:61px;' class='barbg'><div id='tall_cpu_16bar_0' class='graphbar'></div></div>
+						<div style='position:absolute;top:9px;left:0px;width:61px;' class='barbg'><div id='tall_cpu_16bar_1' class='graphbar'></div></div>
+						<div style='position:absolute;top:18px;left:0px;width:61px;' class='barbg'><div id='tall_cpu_16bar_2' class='graphbar'></div></div>
+						<div style='position:absolute;top:27px;left:0px;width:61px;' class='barbg'><div id='tall_cpu_16bar_3' class='graphbar'></div></div>
+						<div style='position:absolute;top:36px;left:0px;width:61px;' class='barbg'><div id='tall_cpu_16bar_4' class='graphbar'></div></div>
+						<div style='position:absolute;top:45px;left:0px;width:61px;' class='barbg'><div id='tall_cpu_16bar_5' class='graphbar'></div></div>
+						<div style='position:absolute;top:54px;left:0px;width:61px;' class='barbg'><div id='tall_cpu_16bar_6' class='graphbar'></div></div>
+						<div style='position:absolute;top:63px;left:0px;width:61px;' class='barbg'><div id='tall_cpu_16bar_7' class='graphbar'></div></div>
+						<div style='position:absolute;top:0px;left:64px;width:61px;' class='barbg'><div id='tall_cpu_16bar_8' class='graphbar'></div></div>
+						<div style='position:absolute;top:9px;left:64px;width:61px;' class='barbg'><div id='tall_cpu_16bar_9' class='graphbar'></div></div>
+						<div style='position:absolute;top:18px;left:64px;width:61px;' class='barbg'><div id='tall_cpu_16bar_10' class='graphbar'></div></div>
+						<div style='position:absolute;top:27px;left:64px;width:61px;' class='barbg'><div id='tall_cpu_16bar_11' class='graphbar'></div></div>
+						<div style='position:absolute;top:36px;left:64px;width:61px;' class='barbg'><div id='tall_cpu_16bar_12' class='graphbar'></div></div>
+						<div style='position:absolute;top:45px;left:64px;width:61px;' class='barbg'><div id='tall_cpu_16bar_13' class='graphbar'></div></div>
+						<div style='position:absolute;top:54px;left:64px;width:61px;' class='barbg'><div id='tall_cpu_16bar_14' class='graphbar'></div></div>
+						<div style='position:absolute;top:63px;left:64px;width:61px;' class='barbg'><div id='tall_cpu_16bar_15' class='graphbar'></div></div>
+					</div>
+				
+				</div>
+	  		  	<canvas id="tall_cpu_canvas" width='125' height='35' style="position:absolute; left:20px; top:39px; z-index:10"/>
+			</div>
+			<div id='tall_divider_0' class='divider'></div>
+			<div class='sectioncontainer' onmouseover="tdc.showHandle('Memory')" onmouseout="tdc.hideHandle('Memory')" id='tall_memory' style='height:67px;position:absolute;top:50px;'>
+				<div id='tallDragHandleMemory' onmousedown="tdc.startDrag(event, 'memory')" class='draghandle' style='cursor:pointer;left:126px;z-index:1000;display:none;'></div>
+				<div class='header'>memory</div>
+				<div class='header'>memory</div>
+	
+				<div style='width:190px;left:20px;color: #838383;' class='line line1 '>Wired:</div>
+				<div style='width:190px;left:20px;color: #838383;' class='line line2'>Active:</div>
+				<div style='width:190px;left:20px;color: #838383;' class='line line3'>Inactive:</div>
+				<div style='width:190px;left:20px;color: #838383;' class='line line4'>Free:</div>
+	
+				<div style='width:64px;left:80px;text-align:right;' id='tall_memory_wired' class='line line1 ellipsis'></div>
+				<div style='width:64px;left:80px;text-align:right;' id='tall_memory_active' class='line line2 ellipsis'></div>
+				<div style='width:64px;left:80px;text-align:right;' id='tall_memory_inactive' class='line line3 ellipsis'></div>
+				<div style='width:64px;left:80px;text-align:right;' id='tall_memory_free' class='line line4 ellipsis'></div>
+	
+				<div id='tall_memory_bar_container' style='left:20px;position:absolute;top:59px;width:124px;' class='barbg'f>
+					<div id='tall_memory_bar' class='graphbar'></div>
+				</div>
+	
+				<div id='tall_memory_advanced' style='display:none;'>
+					<div style='width:190px;left:20px;color: #838383;' class='line line5'>Swap:</div>
+					<div style='width:190px;left:20px;color: #838383;' class='line line6'>Page Ins:</div>
+					<div style='width:190px;left:20px;color: #838383;' class='line line7'>Page Outs:</div>
+		
+					<div style='width:84px;left:60px;text-align:right;' id='tall_memory_swap' class='line line5 ellipsis'></div>
+					<div style='width:64px;left:80px;text-align:right;' id='tall_memory_pageins' class='line line6 ellipsis'></div>
+					<div style='width:64px;left:80px;text-align:right;' id='tall_memory_pageouts' class='line line7 ellipsis'></div>
+				</div>
+			</div>
+			
+			<div id='tall_divider_1' class='divider'></div>
+			<div class='sectioncontainer' onmouseover="tdc.showHandle('Disks')" onmouseout="tdc.hideHandle('Disks')" id='tall_disks' style='height:76px;position:absolute;'>
+				<div id='tallDragHandleDisks' onmousedown="tdc.startDrag(event, 'disks')" class='draghandle' style='cursor:pointer;left:126px;z-index:1000;display:none;'></div>
+				<div class='header'>disks</div>
+				<div class='header'>disks</div>
+				<div style='padding-top:10px;' id='tall_disk_container'></div>
+			</div>
+	
+			<div id='tall_divider_2' class='divider'></div>
+			<div id='tall_network' onmouseover="tdc.showHandle('Network')" onmouseout="tdc.hideHandle('Network')" class='sectioncontainer' style="position:absolute;overflow:hidden;">
+				<div id='tallDragHandleNetwork' onmousedown="tdc.startDrag(event, 'network')" class='draghandle' style='cursor:pointer;left:126px;z-index:1000;display:none;'></div>
+				<div class='header'>network</div>
+				<div class='header'>network</div>
+				<div style='padding-top:10px;' id='tall_network_container'></div>
+				<div id='tall_extip_container' class='ellipsis' style='margin-left:12px;width:125px;color: #838383;position:absolute;'>Ext IP: <span style='color:white;' id='tall_extip'>Updating...</span></div>
+			</div>
+	
+			<div id='tall_divider_3' class='divider'></div>
+			<div id='tall_uptime' onmouseover="tdc.showHandle('Uptime')" onmouseout="tdc.hideHandle('Uptime')" class='sectioncontainer' style='height:45px;position:absolute;'>
+				<div id='tallDragHandleUptime' onmousedown="tdc.startDrag(event, 'uptime')" class='draghandle' style='cursor:pointer;left:126px;z-index:1000;display:none;'></div>
+				<div class="header">uptime</div>
+				<div class="header">uptime</div>
+				<div class='line line1 ellipsis' style='width:125px;left:20px;color:#838383;'>Uptime: <span style='color:white;' id='tall_uptimevalue'></span></div>
+				<div class='line line2 ellipsis' style='width:125px;left:20px;color:#838383;'>Load: <span style='color:white;' id='tall_loadavg'></span></div>
+				<div class='line line3 ellipsis' style='width:125px;left:20px;color:#838383;'>Processes: <span style='color:white;' id='tall_process_count'></span></div>
+			</div>
+	
+			<div id='tall_divider_4' class='divider'></div>
+			<div id='tall_battery' onmouseover="tdc.showHandle('Battery')" onmouseout="tdc.hideHandle('Battery')" class='sectioncontainer' style='height:50px;position:absolute;'>
+				<div id='tallDragHandleBattery' onmousedown="tdc.startDrag(event, 'battery')" class='draghandle' style='cursor:pointer;left:126px;z-index:1000;display:None;'></div>
+				<div class="header">battery</div>
+				<div class="header">battery</div>
+				<div id='tall_battery_container'>
+					<img id='tall_battery_source' src='./images/battery_mains.png' height='33' width='48' style='position:absolute;left:100px;top:10px;'>
+		
+					<div class='line ellipsis' style='width:75px;top:12px;left:20px;color: #838383;'>Cycles: <span style='color:white' id='tall_battery_cycles'></span></div>
+					<div class='line ellipsis' style='width:75px;top:24px;left:20px;color: #838383;'>Health: <span style='color:white' id='tall_battery_health'></span></div>
+					<div class='line ellipsis' style='width:125px;top:38px;left:20px;'><span style='color:white' id='tall_battery_percentage'></span>, <span style='color:white' id='tall_battery_time'></span></div>
+				</div>
+				<div id='tall_bt_container' style='position:absolute;top:54px;left:0px;width:150px;height:20px;'>
+					<div id='tall_mouse_percentage_container' class='' style='position:absolute;width:125px;left:18px;display:none;top:0px;'>
+						<img src='./images/battery_btmouse.png' /> <div style='width:40px;color:white;position:absolute;left:16px;top:3px;' id='tall_mouse_percentage'>0%</div>
+					</div>
+					<div id='tall_kb_percentage_container' class='' style='position:absolute;width:125px;left:80px;display:none;top:0px;'>
+						<img src='./images/battery_btkeyboard.png' /> <div class='ellipsis' style='width:40px;color:white;position:absolute;left:21px;top:3px;' id='tall_kb_percentage'>0%</div>
+					</div>
+				</div>
+			</div>
+	
+			<div id='tall_divider_5' class='divider'></div>
+			<div class='sectioncontainer' onmouseover="tdc.showHandle('Temps')" onmouseout="tdc.hideHandle('Temps')" id='tall_temps' style='position:absolute;'>
+				<div id='tallDragHandleTemps' onmousedown="tdc.startDrag(event, 'temps')" class='draghandle' style='cursor:pointer;left:126px;z-index:1000;display:none;'></div>
+				<div class='header'>temps</div>
+				<div class='header'>temps</div>
+				<div style='position:absolute;left:20px;' id='tall_temp_container'></div>
+			</div>
+	
+			<div id='tall_divider_6' class='divider'></div>
+			<div class='sectioncontainer' onmouseover="tdc.showHandle('Fans')" onmouseout="tdc.hideHandle('Fans')" id='tall_fans' style='position:absolute;'>
+				<div id='tallDragHandleFans' onmousedown="tdc.startDrag(event, 'fans')" class='draghandle' style='cursor:pointer;left:126px;z-index:1000;display:none;'></div>
+				<div class='header'>fans</div>
+				<div class='header'>fans</div>
+				<div style='position:absolute;left:20px;' id='tall_fan_container'></div>
+			</div>
+	
+			<div id='tall_divider_7' class='divider'></div>
+			<div id='tall_processes' onmouseover="tdc.showHandle('Processes')" onmouseout="tdc.hideHandle('Processes')" class='sectioncontainer' style='height:82px;position:absolute;'>
+				<div id='tallDragHandleProcesses' onmousedown="tdc.startDrag(event, 'processes')" class='draghandle' style='cursor:pointer;left:126px;z-index:1000;display:none;'></div>
+				<div onclick="toggleProcessesMode()">
+					<div class="header">processes</div>
+					<div class="header">processes</div>
+				</div>
+				<img id='tall_process_icon0' class='processIcon' style='top:12px;' />
+				<img id='tall_process_icon1' class='processIcon' style='top:30px;' />
+				<img id='tall_process_icon2' class='processIcon' style='top:48px;' />
+				<img id='tall_process_icon3' class='processIcon' style='top:66px;' />
+				<div id='tall_process_name0' style='top:14px;' class='processName ellipsis'></div>
+				<div id='tall_process_name1' style='top:32px;' class='processName ellipsis'></div>
+				<div id='tall_process_name2' style='top:50px;' class='processName ellipsis'></div>
+				<div id='tall_process_name3' style='top:68px;' class='processName ellipsis'></div>
+		
+				<div id='tall_process_cpu0' style='top:14px' class='processCPU'></div>
+				<div id='tall_process_cpu1' style='top:32px' class='processCPU'></div>
+				<div id='tall_process_cpu2' style='top:50px' class='processCPU'></div>
+				<div id='tall_process_cpu3' style='top:68px' class='processCPU'></div>
+			</div>
+		</div>
+		<div id='tall_base' class='base' style='top:31px;'></div>
+	</div>
+
+	<div id="wideSettingsButton" style='background-image:url(./images/tooltips/tooltip_wide_settings.png);width:122px;height:83px;position:absolute;top:6px;left:0px;display:none'></div>
+	<div id="wideHelpButton" style='background-image:url(./images/tooltips/tooltip_wide_help.png);width:122px;height:83px;position:absolute;top:6px;left:0px;display:none'></div>
+	<div id="wideActivityMonButton" style='background-image:url(./images/tooltips/tooltip_wide_activitymon.png);width:122px;height:83px;position:absolute;top:6px;left:0px;display:none'></div>
+	<div id="wideiPhoneButton" style='background-image:url(./images/tooltips/tooltip_wide_istat.png);width:122px;height:83px;position:absolute;top:6px;left:0px;display:none'></div>
+	<div id='wide_window' style='display:none;position:absolute;top:0px;left:120px;'>
+		<div id='wide_iphone_window' style='z-index:1001;position:absolute;top:4px;display:none'>
+			<div style='width:218px;position:relative;'>
+				<img src='./images/windows/window_wide_iphone.png' />
+				<div style="top:78px;left:45px;position:absolute;">
+					<div id="iphoneinfobutton" onclick='widget.openURL("http://bjango.com/apps/istat/ext/isp/");hideiPhoneWindow()'></div>
+					<div id="iphoneok" onclick='hideiPhoneWindow()'></div>
+				</div>
+			</div>
+		</div>
+		<div id='wide_update_window_new' style='z-index:999;position:absolute;top:4px;display:none;'>
+			<div style='width:218px;position:relative;'>
+				<img src='./images/windows/window_wide_update.png' />
+				<div style="top:78px;left:45px;position:absolute;">
+					<div id="skip" onclick='upd.skip()'></div>
+					<div id="no" onclick='upd.hide()'></div>
+					<div id="yes" onclick='widget.openURL("http://www.islayer.com/apps/istatpro/");upd.hide()'></div>
+				</div>
+			</div>
+		</div>
+		<div id='wide_intelinstall_window' style='z-index:999;position:absolute;top:4px;display:none;'>
+			<div style='width:218px;position:relative;'>
+				<img src='./images/windows/window_wide_install.png' />
+				<div style="top:78px;left:45px;position:absolute;">
+					<div id="no" onclick='h("wide_intelinstall_window")'></div>
+					<div id="yes" onclick='widget.openURL("");iStatPro.installIntelModule();h("wide_intelinstall_window")'></div>
+				</div>
+			</div>
+		</div>
+		<div class='draghandlenewpos' id='draghandlenewpos'></div>
+		<div id='dragMask' class='draghandleMask' style='left:60px;z-index:1000;top:5px;'></div>
+		<div id='dragElement' onmousedown="dragElement = this;mouseDown(event);" class='draghandle' style='cursor:pointer;left:60px;z-index:1000;top:5px;display:none;'></div>
+		<div class='leftcap'>
+			<img onmouseover="this.src='./images/skin_wide/wide_prefs_rollie.png';showTooltip('wideSettingsButton')" onmouseout="this.src='./images/skin_wide/wide_prefs.png';hideTooltip('wideSettingsButton')" onclick='this.src="./images/skin_wide/wide_prefs.png";p.showBack()' src='./images/skin_wide/wide_prefs.png' style='cursor:pointer;height:21px;width:19px;position:absolute;top:5px;left:10px;' />
+			<img onmouseover="this.src='./images/skin_wide/wide_help_rollie.png';showTooltip('wideHelpButton')" onmouseout="this.src='./images/skin_wide/wide_help.png';hideTooltip('wideHelpButton')" onclick='widget.openURL("http://islayer.com/support/?p=24")' src='./images/skin_wide/wide_help.png' style='cursor:pointer;height:22px;width:19px;position:absolute;top:27px;left:10px;' />
+			<img onmouseover="this.src='./images/skin_wide/wide_activitymon_rollie.png';showTooltip('wideActivityMonButton')" onmouseout="this.src='./images/skin_wide/wide_activitymon.png';hideTooltip('wideActivityMonButton')" onclick='widget.openApplication("com.apple.activitymonitor")' src='./images/skin_wide/wide_activitymon.png' style='cursor:pointer;height:22px;width:19px;position:absolute;top:49px;left:10px;' />
+			<img onmouseover="this.src='./images/skin_wide/wide_iphone_rollie.png';showTooltip('wideiPhoneButton')" onmouseout="this.src='./images/skin_wide/wide_iphone.png';hideTooltip('wideiPhoneButton')" onclick='widget.openURL("http://bjango.com/apps/istat/ext/isp/")' src='./images/skin_wide/wide_iphone.png' style='cursor:pointer;height:22px;width:19px;position:absolute;top:71px;left:10px;' />
+			<img id='wide_ipcopied' src='./images/IP_copied.png' style='position:absolute;left:11px;top:95px;display:none;' />
+		</div>
+		<div id="wideContentContainer" class='sectioncontainer' style='left:29px;width:8px;display:block;top:0px;background-image:url(./images/skin_wide/wide_mid_background.png)'>
+			<div style='height:130px;top:0px;background-image:url(./images/skin_wide/wide_mid_section.png);position:absolute;width:8px;overflow:hidden;'></div>
+			<div id="wideDragFiller" style='height:130px;top:0px;position:absolute;display:none;z-index:49;'>
+				<div id="wideDragFillerBackground" style='position:absolute;left:10px;background-image:url(./images/skin_wide/wide_mid_section.png);height:130px;'></div>
+				<div style='position:absolute;background-image:url(./images/skin_wide/drag-shadow-left.png);width:10px;height:110px;left:0px;top:5px'></div>
+				<div style='position:absolute;background-image:url(./images/skin_wide/drag-shadow-right.png);width:10px;height:110px;right:0px;top:5px'></div>
+			</div>
+			<div id='wide_cpu' onmouseover="wdc.showHandle('CPU')" onmouseout="wdc.hideHandle('CPU')" style='width:80px;' class='sectioncontainer' style="position:absolute;">
+				<div id='wideDragHandleCPU' onmousedown="wdc.startDrag(event, 'cpu')" class='draghandle' style='cursor:pointer;z-index:1000;display:none;'></div>
+				<div class="header">cpu</div>
+				<div class="header">cpu</div>
+				<div class='line line1 ellipsis' style='width:80px;'>
+					<div><span class='label'>User:</span> <span id='wide_cpu_user'>0</span>%</div>
+				</div>
+				<div class='line line2 ellipsis' style='width:80px;'>
+					<div><span class='label'>System:</span> <span id='wide_cpu_system'>0</span>%</div>
+				</div>
+				<div class='line line3 ellipsis' style='width:80px;'>
+					<div><span class='label'>Nice:</span> <span id='wide_cpu_nice'>0</span>%</div>
+				</div>
+				<div class='line line4 ellipsis' style='width:80px;'>
+					<div><span class='label'>Idle:</span> <span id='wide_cpu_idle'>0</span>%</div>
+				</div>
+				
+				<div id='wide_cpu_bars' style='left:0px;position:absolute;top:72px;'>
+					<div id='wide_cpu_bars_4' style='display:none;'>
+						<div id='wide_cpu_4bar_container_0' style='position:absolute;top:0px;left:0px;width:80px;display:none;' class='barbg'><div id='wide_cpu_4bar_0' class='graphbar'></div></div>
+						<div id='wide_cpu_4bar_container_1' style='position:absolute;top:9px;left:0px;width:80px;display:none;' class='barbg'><div id='wide_cpu_4bar_1' class='graphbar'></div></div>
+						<div id='wide_cpu_4bar_container_2' style='position:absolute;top:18px;left:0px;width:80px;display:none;' class='barbg'><div id='wide_cpu_4bar_2' class='graphbar'></div></div>
+						<div id='wide_cpu_4bar_container_3' style='position:absolute;top:27px;left:0px;width:80px;display:none;' class='barbg'><div id='wide_cpu_4bar_3' class='graphbar'></div></div>
+					</div>
+					<div id='wide_cpu_bars_8' style='display:none;'>
+						<div style='position:absolute;top:0px;left:0px;width:38px;' class='barbg'><div id='wide_cpu_8bar_0' class='graphbar'></div></div>
+						<div style='position:absolute;top:9px;left:0px;width:38px;' class='barbg'><div id='wide_cpu_8bar_1' class='graphbar'></div></div>
+						<div style='position:absolute;top:18px;left:0px;width:38px;' class='barbg'><div id='wide_cpu_8bar_2' class='graphbar'></div></div>
+						<div style='position:absolute;top:27px;left:0px;width:38px;' class='barbg'><div id='wide_cpu_8bar_3' class='graphbar'></div></div>
+						<div style='position:absolute;top:0px;left:42px;width:38px;' class='barbg'><div id='wide_cpu_8bar_4' class='graphbar'></div></div>
+						<div style='position:absolute;top:9px;left:42px;width:38px;' class='barbg'><div id='wide_cpu_8bar_5' class='graphbar'></div></div>
+						<div style='position:absolute;top:18px;left:42px;width:38px;' class='barbg'><div id='wide_cpu_8bar_6' class='graphbar'></div></div>
+						<div style='position:absolute;top:27px;left:42px;width:38px;' class='barbg'><div id='wide_cpu_8bar_7' class='graphbar'></div></div>
+					</div>
+					<div id='wide_cpu_bars_16' style='display:none;'>
+						<div style='position:absolute;top:0px;left:0px;width:19px;' class='barbg'><div id='wide_cpu_16bar_0' class='graphbar'></div></div>
+						<div style='position:absolute;top:9px;left:0px;width:19px;' class='barbg'><div id='wide_cpu_16bar_1' class='graphbar'></div></div>
+						<div style='position:absolute;top:18px;left:0px;width:19px;' class='barbg'><div id='wide_cpu_16bar_2' class='graphbar'></div></div>
+						<div style='position:absolute;top:27px;left:0px;width:19px;' class='barbg'><div id='wide_cpu_16bar_3' class='graphbar'></div></div>
+						<div style='position:absolute;top:0px;left:21px;width:19px;' class='barbg'><div id='wide_cpu_16bar_4' class='graphbar'></div></div>
+						<div style='position:absolute;top:9px;left:21px;width:19px;' class='barbg'><div id='wide_cpu_16bar_5' class='graphbar'></div></div>
+						<div style='position:absolute;top:18px;left:21px;width:19px;' class='barbg'><div id='wide_cpu_16bar_6' class='graphbar'></div></div>
+						<div style='position:absolute;top:27px;left:21px;width:19px;' class='barbg'><div id='wide_cpu_16bar_7' class='graphbar'></div></div>
+						<div style='position:absolute;top:0px;left:42px;width:19px;' class='barbg'><div id='wide_cpu_16bar_8' class='graphbar'></div></div>
+						<div style='position:absolute;top:9px;left:42px;width:19px;' class='barbg'><div id='wide_cpu_16bar_9' class='graphbar'></div></div>
+						<div style='position:absolute;top:18px;left:42px;width:19px;' class='barbg'><div id='wide_cpu_16bar_10' class='graphbar'></div></div>
+						<div style='position:absolute;top:27px;left:42px;width:19px;' class='barbg'><div id='wide_cpu_16bar_11' class='graphbar'></div></div>
+						<div style='position:absolute;top:0px;left:63px;width:19px;' class='barbg'><div id='wide_cpu_16bar_12' class='graphbar'></div></div>
+						<div style='position:absolute;top:9px;left:63px;width:19px;' class='barbg'><div id='wide_cpu_16bar_13' class='graphbar'></div></div>
+						<div style='position:absolute;top:18px;left:63px;width:19px;' class='barbg'><div id='wide_cpu_16bar_14' class='graphbar'></div></div>
+						<div style='position:absolute;top:27px;left:63px;width:19px;' class='barbg'><div id='wide_cpu_16bar_15' class='graphbar'></div></div>
+					</div>
+				</div>
+				
+	  		  	<canvas id="wide_cpu_canvas" width='80' height='35'  style="display:none;position:absolute; left:0px; top:72px; z-index:10"/>
+			</div>
+			<div id='wide_divider_0' class='divider'></div>
+			<div id='wide_memory' onmouseover="wdc.showHandle('Memory')" onmouseout="wdc.hideHandle('Memory')" style='width:80px;' class='sectioncontainer'>
+				<div id='wideDragHandleMemory' onmousedown="wdc.startDrag(event, 'memory')" class='draghandle' style='cursor:pointer;z-index:1000;display:none;'></div>
+				<div class="header">memory</div>
+				<div class="header">memory</div>
+				<div class='line line1 ellipsis' style='width:82px;'>
+					<div><span class='label'>Wired:</span> <span id='wide_memory_wired'>0</span></div>
+				</div>
+				<div class='line line2 ellipsis' style='width:82px;'>
+					<div><span class='label'>Active:</span> <span id='wide_memory_active'>0</span></div>
+				</div>
+				<div class='line line3 ellipsis' style='width:82px;'>
+					<div style='width:87px;'><span class='label'>Inactive:</span> <span id='wide_memory_inactive'>0</span></div>
+				</div>
+				<div class='line line4 ellipsis' style='width:82px;'>
+					<div><span class='label'>Free:</span> <span id='wide_memory_free'>0</span></div>
+				</div>
+	
+				<div id='wide_memory_advanced' style='display:none;'>
+					<div class='line line5 ellipsis' style='width:120px;'>
+						<div><span class='label'>Swap:</span> <span id='wide_memory_swap'>0mb/0mb</span></div>
+					</div>
+					<div class='line line6 ellipsis' style='width:120px;'>
+						<div><span class='label'>Page Ins:</span> <span id='wide_memory_pageins'>0</span></div>
+					</div>
+					<div class='line line7 ellipsis' style='width:120px;'>
+						<div><span class='label'>Page Outs:</span> <span id='wide_memory_pageouts'>0</span></div>
+					</div>
+					<div style='position:absolute;top:100px;left:0px;width:105px;' class='barbg'>
+						<div id='wide_memory_bar' class='graphbar'></div>
+					</div>
+				</div>
+			  	<canvas id="memory_canvas" width='82' height='35'  style="display:none;position:absolute; top:72px; z-index:10"/>
+			</div>
+			<div id='wide_divider_1' class='divider'></div>
+			<div id='wide_disks' onmouseover="wdc.showHandle('Disks')" onmouseout="wdc.hideHandle('Disks')" class='sectioncontainer'>
+				<div id='wideDragHandleDisks' onmousedown="wdc.startDrag(event, 'disks')" class='draghandle' style='cursor:pointer;z-index:1000;display:none;'></div>
+				<div class="header">disks</div>
+				<div class="header">disks</div>
+				<div id='wide_disk_container' style='position:absolute;top:0px;'></div>
+			</div>
+	
+			<div id='wide_divider_2' class='divider'></div>
+			<div id='wide_network' onmouseover="wdc.showHandle('Network')" onmouseout="wdc.hideHandle('Network')" class='sectioncontainer'>
+				<div id='wideDragHandleNetwork' onmousedown="wdc.startDrag(event, 'network')" class='draghandle' style='cursor:pointer;z-index:1000;display:none;'></div>
+				<div class="header">network</div>
+				<div class="header">network</div>
+				<div id='wide_network_container' style='position:absolute;top:0px;left:0px;'></div>
+				<div style='position:absolute;top:65px;left:0px;color:white;width:130px;' id='wide_extip_container'><span style='color:#838383'>Ext: </span><span id='wide_extip'>Updating...</span></div>
+			</div>
+			<div id='wide_divider_3' class='divider'></div>
+			<div id='wide_uptime' onmouseover="wdc.showHandle('Uptime')" onmouseout="wdc.hideHandle('Uptime')"  class='sectioncontainer' style="width:90px">
+				<div id='wideDragHandleUptime' onmousedown="wdc.startDrag(event, 'uptime')" class='draghandle' style='cursor:pointer;z-index:1000;display:none;'></div>
+				<div class="header">uptime</div>
+				<div class="header">uptime</div>
+				<div class='line line1' style='color:#838383'>Uptime</div>
+				<div class='line line2' id='wide_uptimevalue'></div>
+				<div class='line line4' style='color:#838383'>Processes</div>
+				<div class='line line5' id='wide_process_count'></div>
+				<div class='line line7' style='color:#838383'>Load Average</div>
+				<div class='line line8 ellipsis' style='width:90px;'><span id='wide_loadavg'></span></div>
+			</div>
+			<div id='wide_divider_4' class='divider'></div>
+			<div id='wide_battery' onmouseover="wdc.showHandle('Battery')" onmouseout="wdc.hideHandle('Battery')" class='sectioncontainer' style='width:94px;'>
+				<div id='wideDragHandleBattery' onmousedown="wdc.startDrag(event, 'battery')" class='draghandle' style='cursor:pointer;z-index:1000;display:none;'></div>
+				<div class="header">battery</div>
+				<div class="header">battery</div>
+				<div id='wide_battery_container'>
+					<img id='wide_battery_source' src='./images/battery_mains.png' height='33' width='48' style='position:absolute;left:52px;top:21px;'>
+					<div class='line line3 ellipsis' style='top:42px;width:94px;'><span style='color:#838383'>Charge: </span><span id='wide_battery_percentage'></span></div>
+					<div class='line line4 ellipsis' style='top:54px;width:94px;'><span id='wide_battery_time'></span></div>
+					<div class='line line1 ellipsis' style='top:20px;width:94px;'><span style='color:#838383'>Health: </span><span id='wide_battery_health'></span></div>
+					<div class='line line2 ellipsis' style='top:31px;width:94px;'><span style='color:#838383'>Cycles: </span><span id='wide_battery_cycles'></span></div>
+					<div style='position:absolute;top:73px;left:0px;width:94px;' class='barbg'>
+						<div id='wide_battery_bar' class='graphbar'></div>
+					</div>
+				</div>
+				<div id='wide_mouse_percentage_container' class='' style='position:absolute;width:125px;left:-3px;display:none;top:89px;'>
+					<img src='./images/battery_btmouse.png' /> <div style='width:39px;color:white;position:absolute;left:16px;top:3px;' id='wide_mouse_percentage'>0%</div>
+				</div>
+				<div id='wide_kb_percentage_container' class='' style='position:absolute;width:125px;left:44px;display:none;top:89px;'>
+					<img src='./images/battery_btkeyboard.png' /> <div class='ellipsis' style='width:40px;color:white;position:absolute;left:20px;top:3px;' id='wide_kb_percentage'>0%</div>
+				</div>
+			</div>
+			<div id='wide_divider_5' class='divider'></div>
+			<div id='wide_temps' onmouseover="wdc.showHandle('Temps')" onmouseout="wdc.hideHandle('Temps')" class='sectioncontainer' style='overflow:hidden;'>
+				<div id='wideDragHandleTemps' onmousedown="wdc.startDrag(event, 'temps')" class='draghandle' style='cursor:pointer;z-index:1000;display:none;'></div>
+				<div class="header">temps</div>
+				<div class="header">temps</div>
+				<div class='line line1' style='width:150px;'>
+					<div class='ellipsis' id='wide_temp_sensor0_name' style='position:absolute;top:0px;left:0px;width:45px;height:12px;color: #838383;overflow:hidden;'></div>
+					<div id='wide_temp_sensor0_value' style='position:absolute;top:0px;left:0px;width:30px;height:12px;text-align:right;color:white;'></div>
+				</div>
+				<div class='line line2' style='width:150px;'>
+					<div class='ellipsis' id='wide_temp_sensor1_name' style='width:45px;height:12px;color: #838383;position:absolute;overflow:hidden;'></div>
+					<div id='wide_temp_sensor1_value' style='position:absolute;left:50px;width:30px;height:12px;text-align:right;color:white;'></div>
+				</div>
+				<div class='line line3' style='width:150px;'>
+					<div class='ellipsis' id='wide_temp_sensor2_name' style='width:45px;height:12px;color: #838383;position:absolute;overflow:hidden;'></div>
+					<div id='wide_temp_sensor2_value' style='position:absolute;left:50px;width:30px;height:12px;text-align:right;color:white;'></div>
+				</div>
+				<div class='line line4' style='width:150px;'>
+					<div class='ellipsis' id='wide_temp_sensor3_name' style='width:45px;height:12px;color: #838383;position:absolute;overflow:hidden;'></div>
+					<div id='wide_temp_sensor3_value' style='position:absolute;left:50px;width:30px;height:12px;text-align:right;color:white;'></div>
+				</div>
+				<div class='line line5' style='width:150px;'>
+					<div class='ellipsis' id='wide_temp_sensor4_name' style='width:45px;height:12px;color: #838383;position:absolute;overflow:hidden;'></div>
+					<div id='wide_temp_sensor4_value' style='position:absolute;left:50px;width:30px;height:12px;text-align:right;color:white;'></div>
+				</div>
+				<div class='line line6' style='width:150px;'>
+					<div class='ellipsis' id='wide_temp_sensor5_name' style='width:45px;height:12px;color: #838383;position:absolute;overflow:hidden;'></div>
+					<div id='wide_temp_sensor5_value' style='position:absolute;left:50px;width:30px;height:12px;text-align:right;color:white;'></div>
+				</div>
+				<div class='line line7' style='width:150px;'>
+					<div class='ellipsis' id='wide_temp_sensor6_name' style='width:45px;height:12px;color: #838383;position:absolute;overflow:hidden;'></div>
+					<div id='wide_temp_sensor6_value' style='position:absolute;left:50px;width:30px;height:12px;text-align:right;color:white;'></div>
+				</div>
+				<div class='line line8' style='width:150px;'>
+					<div class='ellipsis' id='wide_temp_sensor7_name' style='width:45px;height:12px;color: #838383;position:absolute;overflow:hidden;'></div>
+					<div id='wide_temp_sensor7_value' style='position:absolute;left:50px;width:30px;height:12px;text-align:right;color:white;'></div>
+				</div>
+			</div>
+			<div id='wide_divider_6' class='divider'></div>
+			<div id='wide_fans' onmouseover="wdc.showHandle('Fans')" onmouseout="wdc.hideHandle('Fans')" class="sectioncontainer" style='height:130px;'>
+				<div id='wideDragHandleFans' onmousedown="wdc.startDrag(event, 'fans')" class='draghandle' style='cursor:pointer;z-index:1000;display:none;'></div>
+				<div class="header">fans</div>
+				<div class="header">fans</div>
+				<div class='line line1' style='width:150px;'>
+					<div class='ellipsis' id='wide_fan_sensor0_name' style='position:absolute;top:0px;left:0px;width:45px;height:12px;color: #838383;overflow:hidden;'></div>
+					<div id='wide_fan_sensor0_value' style='position:absolute;top:0px;left:0px;width:50px;height:12px;text-align:right;color:white;'></div>
+				</div>
+				<div class='line line2' style='width:150px;'>
+					<div class='ellipsis' id='wide_fan_sensor1_name' style='width:45px;height:12px;color: #838383;position:absolute;overflow:hidden;'></div>
+					<div id='wide_fan_sensor1_value' style='position:absolute;left:50px;width:50px;height:12px;text-align:right;color:white;'></div>
+				</div>
+				<div class='line line3' style='width:150px;'>
+					<div class='ellipsis' id='wide_fan_sensor2_name' style='width:45px;height:12px;color: #838383;position:absolute;overflow:hidden;'></div>
+					<div id='wide_fan_sensor2_value' style='position:absolute;left:50px;width:50px;height:12px;text-align:right;color:white;'></div>
+				</div>
+				<div class='line line4' style='width:150px;'>
+					<div class='ellipsis' id='wide_fan_sensor3_name' style='width:45px;height:12px;color: #838383;position:absolute;overflow:hidden;'></div>
+					<div id='wide_fan_sensor3_value' style='position:absolute;left:50px;width:50px;height:12px;text-align:right;color:white;'></div>
+				</div>
+				<div class='line line5' style='width:150px;'>
+					<div class='ellipsis' id='wide_fan_sensor4_name' style='width:45px;height:12px;color: #838383;position:absolute;overflow:hidden;'></div>
+					<div id='wide_fan_sensor4_value' style='position:absolute;left:50px;width:50px;height:12px;text-align:right;color:white;'></div>
+				</div>
+				<div class='line line6' style='width:150px;'>
+					<div class='ellipsis' id='wide_fan_sensor5_name' style='width:45px;height:12px;color: #838383;position:absolute;overflow:hidden;'></div>
+					<div id='wide_fan_sensor5_value' style='position:absolute;left:50px;width:50px;height:12px;text-align:right;color:white;'></div>
+				</div>
+				<div class='line line7' style='width:150px;'>
+					<div class='ellipsis' id='wide_fan_sensor6_name' style='width:45px;height:12px;color: #838383;position:absolute;overflow:hidden;'></div>
+					<div id='wide_fan_sensor6_value' style='position:absolute;left:50px;width:50px;height:12px;text-align:right;color:white;'></div>
+				</div>
+				<div class='line line8' style='width:150px;'>
+					<div class='ellipsis' id='wide_fan_sensor7_name' style='width:45px;height:12px;color: #838383;position:absolute;overflow:hidden;'></div>
+					<div id='wide_fan_sensor7_value' style='position:absolute;left:50px;width:50px;height:12px;text-align:right;color:white;'></div>
+				</div>
+			</div>
+			<div id='wide_divider_7' class='divider'></div>
+			<div id='wide_processes' onmouseover="wdc.showHandle('Processes')" onmouseout="wdc.hideHandle('Processes')" class='sectioncontainer' style="width:130px;">
+				<div id='wideDragHandleProcesses' onmousedown="wdc.startDrag(event, 'processes')" class='draghandle' style='cursor:pointer;z-index:1000;display:none;'></div>
+				<div onclick="toggleProcessesMode()">
+					<div class="header">processes</div>
+					<div class="header">processes</div>
+				</div>
+				<img id='wide_process_icon0' class='processIcon' style='top:22px;' />
+				<img id='wide_process_icon1' class='processIcon' style='top:40px;' />
+				<img id='wide_process_icon2' class='processIcon' style='top:58px;' />
+				<img id='wide_process_icon3' class='processIcon' style='top:76px;' />
+				<img id='wide_process_icon4' class='processIcon' style='top:94px;' />
+				<div id='wide_process_name0' style='top:24px;' class='processName ellipsis'></div>
+				<div id='wide_process_name1' style='top:42px;' class='processName ellipsis'></div>
+				<div id='wide_process_name2' style='top:60px;' class='processName ellipsis'></div>
+				<div id='wide_process_name3' style='top:78px;' class='processName ellipsis'></div>
+				<div id='wide_process_name4' style='top:96px;' class='processName ellipsis'></div>
+		
+				<div id='wide_process_cpu0' style='top:24px' class='processCPU'></div>
+				<div id='wide_process_cpu1' style='top:42px' class='processCPU'></div>
+				<div id='wide_process_cpu2' style='top:60px' class='processCPU'></div>
+				<div id='wide_process_cpu3' style='top:78px' class='processCPU'></div>
+				<div id='wide_process_cpu4' style='top:96px' class='processCPU'></div>
+			</div>
+		</div>
+		<div id='wide_right_cap' style='background-image:url(./images/skin_wide/wide_footer.png);width:23px;height:130px;position:absolute;top:0px;left:37px;'></div>
+	</div>
+</div>
+
+<div id='behind' style='width:256px;display:block;position:absolute;left:0px;opacity:0;'>
+	
+	<div style='position:absolute;top:446px;left:20px;width:100px;height:22px;cursor:pointer' onclick='widget.openURL("http://www.islayer.com");'></div>
+	<div style='background-image:url(./images/back/back_top.png);height:63px;width:256px;position:relative;'>
+		<img id='tab_image0' src='./images/back/tabs_general_on.png' onclick='p.selectTab(0);this.src="./images/back/tabs_general_on.png"' style='position:absolute;top:41px;left:20px;' onmouseover='if(shouldToggleImageForTab(0)) { this.src = "./images/back/tabs_general_rollie.png" }'  onmouseout='if(shouldToggleImageForTab(0)) { this.src = "./images/back/tabs_general.png" }'/>
+		<img id='tab_image1' src='./images/back/tabs_sections.png' onclick='p.selectTab(1);this.src="./images/back/tabs_sections_on.png"' style='position:absolute;top:41px;left:93px;' onmouseover='if(shouldToggleImageForTab(1)) { this.src = "./images/back/tabs_sections_rollie.png" }'  onmouseout='if(shouldToggleImageForTab(1)) { this.src = "./images/back/tabs_sections.png" }'>
+		<img id='tab_image2' src='./images/back/tabs_display.png' onclick='p.selectTab(2);this.src="./images/back/tabs_display_on.png"' style='position:absolute;top:41px;left:165px;' onmouseover='if(shouldToggleImageForTab(2)) { this.src = "./images/back/tabs_display_rollie.png" }'  onmouseout='if(shouldToggleImageForTab(2)) { this.src = "./images/back/tabs_display.png" }'>
+	</div>
+	<div style="position:relative;height:181px;overflow:hidden;" id="backMiddleContainer">
+		<div id='tab_general' style='background-image:url(./images/back/back_general.png);height:181px;width:256px;display:block;position:absolute;'>
+			<div id='back_update_window_new' style='z-index:999;position:absolute;left:20px;display:none;top:25px;'>
+				<div style='width:218px;position:relative;'>
+					<img src='./images/windows/window_wide_update.png' />
+					<div style="top:78px;left:45px;position:absolute;">
+						<div id="no" onclick='upd.hide();'></div>
+						<div id="yes" onclick='widget.openURL("http://www.islayer.com/apps/istatpro/");upd.hide();'></div>
+					</div>
+				</div>
+			</div>
+			<div id='back_update_window_current' style='z-index:999;position:absolute;left:20px;display:none;top:25px;'>
+				<div style='width:218px;position:relative;'>
+					<img src='./images/windows/window_wide_noupdate.png' />
+					<div style="top:78px;left:79px;position:absolute;">
+						<div id="ok" onclick='upd.hide();'></div>
+					</div>
+				</div>
+			</div>
+		
+			<select style='position:absolute;top:7px;left:137px;width:96px;' id='degreesMenu' onchange='changeDegrees(this.selectedIndex)'>
+				<option value='c'>Celsius</option>
+				<option value='f'>Fahrenheit</option>
+				<option value='k'>Kelvin</option>
+			</select>
+	
+			<select style='position:absolute;top:26px;left:137px;width:96px;' id='processesMenu' onchange='changeProcessesSortMode(this.options[this.selectedIndex])'>
+				<option value='cpu'>CPU Usage</option>
+				<option value='mem'>Memory Usage</option>
+			</select>
+	
+			<select style='position:absolute;top:45px;left:137px;width:96px;' id='skinTypeMenu' onchange='changeSkinType(this.options[this.selectedIndex])'>
+				<option value='tall'>Tall</option>
+				<option value='wide'>Wide</option>
+			</select>
+	
+			<select style='position:absolute;top:64px;left:137px;width:96px;' id='skinColorMenu' onchange='changeSkinColor(this.options[this.selectedIndex])';>
+				<option value='blue'>Blue</option>
+				<option value='fire'>Fire</option>
+				<option value='graphite'>Graphite</option>
+				<option value='green'>Green</option>
+				<option value='grey'>Grey</option>
+				<option value='pink'>Pink</option>
+				<option value='purple'>Purple</option>
+				<option value='putty'>Putty</option>
+				<option value='red'>Red</option>
+			</select>
+	
+			<select style='position:absolute;top:83px;left:137px;width:96px;' id='smartTimerMenu' onchange='changeSmartTimer(this.options[this.selectedIndex])'>
+				<option value='0'>Off</option>
+				<option value='1'>5 mins</option>
+				<option value='2'>15 mins</option>
+				<option value='3'>60 mins</option>
+			</select>
+				
+			<div class='ellipsis' style='position:absolute;top:12px;left:140px;width:78px;' id='degreesMenuText'></div>
+			<div class='ellipsis' style='position:absolute;top:31px;left:140px;width:78px;' id='processesMenuText'></div>
+			<div class='ellipsis' style='position:absolute;top:50px;left:140px;width:78px;' id='skinTypeMenuText'></div>
+			<div class='ellipsis' style='position:absolute;top:69px;left:140px;width:78px;' id='skinColorMenuText'></div>
+			<div class='ellipsis' style='position:absolute;top:88px;left:140px;width:78px;' id='smartTimerMenuText'></div>
+	
+			<div class='update' onclick='upd.check(1)'></div>
+			<select style='position:absolute;top:148px;left:137px;width:96px;' id='updateCheckerMenu' onchange='changeUpdateChecker(this.options[this.selectedIndex])'>
+				<option value='on'>Daily</option>
+				<option value='off'>Off</option>
+			</select>
+			<div class='ellipsis' style='position:absolute;top:153px;left:140px;width:78px;' id='updateMenuText'></div>
+		</div>
+	
+		<div id='tab_sections' style='background-image:url(./images/back/back_sections.png);height:189px;width:256px;position:absolute;display:none;'>
+			<select style='position:absolute;top:7px;left:137px;width:96px;' id='cpuModeMenu' onchange='if(this.selectedIndex < 2){ widget.setPreferenceForKey("" + this.selectedIndex + "", "cpu_graph_mode") };p.changeSectionState(this.options[this.selectedIndex], "cpu", "cpuModeMenuText")'>
+				<option value='on'>Bars</option>
+				<option value='on'>Graph</option>
+				<option value='off'>Off</option>
+			</select>
+			<select style='position:absolute;top:26px;left:137px;width:96px;' id='memoryModeMenu' onchange='if(this.selectedIndex < 2){ widget.setPreferenceForKey("" + this.selectedIndex + "", "memory_detail_mode") };p.changeSectionState(this.options[this.selectedIndex], "memory", "memoryModeMenuText")'>
+				<option value='on'>Simple</option>
+				<option value='on'>Advanced</option>
+				<option value='off'>Off</option>
+			</select>
+			<select style='position:absolute;top:45px;left:137px;width:96px;' id='diskModeMenu' onchange='p.changeSectionState(this.options[this.selectedIndex], "disks", "diskModeMenuText")'>
+				<option value='on'>On</option>
+				<option value='off'>Off</option>
+			</select>
+			<select style='position:absolute;top:64px;left:137px;width:96px;' id='batteryModeMenu' onchange='p.changeSectionState(this.options[this.selectedIndex], "battery", "batteryModeMenuText")'>
+				<option value='on'>On</option>
+				<option value='off'>Off</option>
+			</select>
+			<select style='position:absolute;top:83px;left:137px;width:96px;' id='networkModeMenu' onchange='p.changeSectionState(this.options[this.selectedIndex], "network", "networkModeMenuText")'>
+				<option value='on'>On</option>
+				<option value='off'>Off</option>
+			</select>
+			<select style='position:absolute;top:102px;left:137px;width:96px;' id='uptimeModeMenu' onchange='p.changeSectionState(this.options[this.selectedIndex], "uptime", "uptimeModeMenuText")'>
+				<option value='on'>On</option>
+				<option value='off'>Off</option>
+			</select>
+			<select style='position:absolute;top:121px;left:137px;width:96px;' id='processedModeMenu' onchange='p.changeSectionState(this.options[this.selectedIndex], "processes", "processesModeMenuText")'>
+				<option value='on'>On</option>
+				<option value='off'>Off</option>
+			</select>
+			<select style='position:absolute;top:140px;left:137px;width:96px;' id='tempsModeMenu' onchange='p.changeSectionState(this.options[this.selectedIndex], "temps", "tempsModeMenuText")'>
+				<option value='on'>On</option>
+				<option value='off'>Off</option>
+			</select>
+			<select style='position:absolute;top:159px;left:137px;width:96px;' id='fansModeMenu' onchange='p.changeSectionState(this.options[this.selectedIndex], "fans", "fansModeMenuText")'>
+				<option value='on'>On</option>
+				<option value='off'>Off</option>
+			</select>
+			
+			<div class='ellipsis' style='position:absolute;top:12px;left:140px;width:78px;' id='cpuModeMenuText'></div>
+			<div class='ellipsis' style='position:absolute;top:31px;left:140px;width:78px;' id='memoryModeMenuText'></div>
+			<div class='ellipsis' style='position:absolute;top:50px;left:140px;width:78px;' id='diskModeMenuText'></div>
+			<div class='ellipsis' style='position:absolute;top:69px;left:140px;width:78px;' id='batteryModeMenuText'></div>
+			<div class='ellipsis' style='position:absolute;top:88px;left:140px;width:78px;' id='networkModeMenuText'></div>
+			<div class='ellipsis' style='position:absolute;top:107px;left:140px;width:78px;' id='uptimeModeMenuText'></div>
+			<div class='ellipsis' style='position:absolute;top:126px;left:140px;width:78px;' id='processesModeMenuText'></div>
+			<div class='ellipsis' style='position:absolute;top:145px;left:140px;width:78px;' id='tempsModeMenuText'></div>
+			<div class='ellipsis' style='position:absolute;top:164px;left:140px;width:78px;' id='fansModeMenuText'></div>
+		</div>
+	
+		<div id='tab_display' style='background-image:url(./images/back/back_display.png);width:256px;position:absolute;display:none;height:132px;'>
+			<div style='margin-left:23px;padding:10px 0px 10px 0px'>
+				<div style='background:url(./images/back/display_background.png) repeat-y;width:77px;height:120pxoverflow:hidden;float:left;'>
+					<div onclick='dc.changeFilterMode(0)' id='disks_filter' class='ellipsis filternamesel' style='height:17px;width:72px;'><div style='padding:2px 0px 0px 5px;'>Disks</div></div>
+					<div onclick='dc.changeFilterMode(1)' id='network_filter' class='ellipsis' style='height:17px;width:72px;'><div style='padding:2px 0px 0px 5px;'>Network</div></div>
+					<div onclick='dc.changeFilterMode(2)' id='temps_filter' class='ellipsis' style='height:17px;width:72px;'><div style='padding:2px 0px 0px 5px;'>Temps</div></div>
+					<div onclick='dc.changeFilterMode(3)' id='fans_filter' class='ellipsis' style='height:17px;width:72px;'><div style='padding:2px 0px 0px 5px;'>Fans</div></div>
+					<div onclick='dc.changeFilterMode(4)' id='processes_filter' class='ellipsis' style='height:17px;width:72px;'><div style='padding:2px 0px 0px 5px;'>Processes</div></div>
+				</div>
+				<div style='float:left;'>
+					<div id='display_scrollarea' style="height:85px"></div>
+	   				 <div id="display_scroller"></div>
+				</div>
+				<div style='clear:both;'></div>
+				<div class="resetBandwidth" onclick="resetBandwidth()"></div>
+			</div>
+		</div>
+	</div>
+	<div style='background-image:url(./images/back/back_bottom.png);height:139px;width:256px;position:relative;'>
+		<div class='done' style='background-image:url(./images/back/button_done.png)' onclick='p.showFront();this.style.background="url(./images/back/button_done.png)"' onmouseover='this.style.background="url(./images/back/button_done_rollie.png)"' onmouseout='this.style.background="url(./images/back/button_done.png)"'></div>
+		<div class='iphoneapps' onclick='widget.openURL("http://www.bjango.com/apps/");'></div>
+		<div class='paypal' onclick='widget.openURL("http://www.islayer.com/donate/");'></div>
+	</div>
+
+</div>
+</body>
+</html>

@@ -1,0 +1,129 @@
+.draghandle {
+	background-image:url(../images/skin_wide/wide_draghandle.png);
+	position:absolute;
+	width:21px;
+	height:17px;
+	-apple-dashboard-region: dashboard-region(control rectangle);
+	right:0px;
+	top:2px;
+}
+
+.draghandleMask {
+	background-image:url(../images/skin_wide/wide_dragsection.png);
+	width:77px;
+	height:110px;	
+	position:absolute;
+	display:none;
+}
+
+.draghandlenewpos {
+	width:13px;
+	height:109px;
+	top:6px;
+	position:absolute;
+	display:none;
+	z-index:999;
+}
+
+.processIcon {
+	position: absolute;
+	left: 0px;
+	height: 16px;
+	width: 16px;
+}
+
+.processName {
+	position: absolute;
+	left: 20px;
+	text-shadow: black 0px 2px 2px;
+	text-overflow: ellipsis;
+	white-space: nowrap;
+	overflow: hidden;
+	height: 13px;
+	width: 69px;
+}
+
+.processCPU {
+	text-align: right;
+	position: absolute;
+	left: 90px;
+	text-shadow: black 0px 2px 2px;
+	text-overflow: ellipsis;
+	white-space: nowrap;
+	overflow: hidden;
+	height: 13px;
+	width: 40px;
+}
+
+.line1 {
+	top:20px;
+}
+
+.line2 {
+	top:31px;
+}
+
+.line3 {
+	top:42px;
+}
+
+.line4 {
+	top:53px;
+}
+
+.line5 {
+	top:64px;
+}
+
+.line6 {
+	top:75px;
+}
+
+.line7 {
+	top:86px;
+}
+
+.line8 {
+	top:97px;
+}
+
+.sectioncontainer {
+	position:absolute;
+	display:none;
+	background-image:url(../images/skin_wide/wide_mid_section.png);
+	height:130px;
+	padding:0px 0px 0px 0px;
+	overflow:hidden;
+	background-repeat:repeat-x;
+}
+
+.divider {
+	position:absolute;
+	display:none;
+	background-image:url(../images/skin_wide/wide_divider.png),url(../images/skin_wide/wide_mid_section.png);
+	background-repeat:no-repeat, repeat-x;
+	background-position:top center,top left;
+	width:2px;
+	height:130px;
+	top:0px;
+	padding:0px 5px 0px 5px;
+}
+
+.inlinedivider {
+	margin-left:6px;
+	background-image:url(../images/skin_wide/wide_divider.png);
+	background-repeat:no-repeat;
+	width:8px;
+	height:130px;
+	float:left;
+	position:absolute;	
+}
+
+.header {
+	position:absolute;
+	top:10px;
+	font: 8.0px 'Lucida Grande';
+	font-weight:bold;
+	text-transform: uppercase;
+	letter-spacing: 0.2em;
+}

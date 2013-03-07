@@ -1,0 +1,23 @@
+.leftcap {
+	background-image:url(../../images/skin_wide/skin_fire/wide_header.png);
+	width:29px;
+	height:130px;
+	float:left;
+	position:absolute;
+	left:0px;
+	top:0px;
+}
+
+.header {
+	color:#FF7F00;
+}
+
+.draghandlenewpos {
+	background-image:url(../../images/skin_wide/skin_fire/wide_dragnewposition.png);
+}
+
+.graphbar {
+	background-image:url(../../images/common/bar_horizontal_fire125.png);
+	width:80px;
+	height:8px;
+}

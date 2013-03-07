@@ -1,0 +1,140 @@
+.draghandle {
+	background-image:url(../images/skin_tall/tall_draghandle.png);
+	position:absolute;
+	width:21px;
+	height:11px;
+	-apple-dashboard-region: dashboard-region(control rectangle);
+}
+
+.draghandleMask {
+	background-image:url(../images/skin_tall/tall_dragsection.png);
+	width:144px;
+	height:58px;	
+	position:absolute;
+	display:none;
+}
+
+.draghandlenewpos {
+	width:144px;
+	height:13px;
+	top:6px;
+	left:10px;
+	position:absolute;
+	display:none;
+	z-index:999;
+}
+
+.base {
+	background-image:url(../images/skin_tall/tall_footer.png);
+	width:164px;
+	height:27px;
+	position:absolute;
+}
+
+.processIcon {
+	position: absolute;
+	left: 20px;
+	height: 16px;
+	width: 16px;
+}
+
+.processName {
+	position: absolute;
+	left: 40px;
+	text-shadow: black 0px 2px 2px;
+	text-overflow: ellipsis;
+	white-space: nowrap;
+	overflow: hidden;
+	height: 13px;
+	width: 69px;
+}
+
+.processCPU {
+	text-align: right;
+	position: absolute;
+	left: 105px;
+	text-shadow: black 0px 2px 2px;
+	text-overflow: ellipsis;
+	white-space: nowrap;
+	overflow: hidden;
+	height: 13px;
+	width: 40px;
+}
+
+.line1 {
+	top:12px;
+}
+
+.line2 {
+	top:23px;
+}
+
+.line3 {
+	top:34px;
+}
+
+.line4 {
+	top:45px;
+}
+
+.line5 {
+	top:56px;
+}
+
+.line6 {
+	top:67px;
+}
+
+.line7 {
+	top:78px;
+}
+
+.line8 {
+	top:89px;
+}
+
+.sectioncontainer {
+	position:absolute;
+	display:none;
+	width:164px;
+	padding:0px 8px 0px 8px;
+	overflow:hidden;
+	background-repeat:repeat-y;
+	background-image:url(../images/skin_tall/tall_mid_section.png);
+}
+
+.header {
+	position:absolute;
+	top:0px;
+	font: 8.0px 'Lucida Grande';
+	font-weight:bold;
+	text-transform: uppercase;
+	letter-spacing: 0.2em;
+	text-align:center;
+	width:150px;
+}
+
+.divider {
+	position:absolute;
+	display:block;
+	background-image:url(../images/skin_tall/tall_divider.png), url(../images/skin_tall/tall_mid_section.png);
+	background-repeat:no-repeat, repeat-y;
+	width:164px;
+	left:0px;
+	height:2px;
+	padding:4px 0px 4px 0px;
+	background-position:center left, top left;
+	top:0px;
+}
+
+.inlinedivider {
+	position:absolute;
+	display:block;
+	background-image:url(../images/skin_tall/tall_divider.png);
+	background-repeat:no-repeat;
+	width:164px;
+	left:0px;
+	height:2px;
+	padding:4px 0px 4px 0px;
+	background-position:center left;
+}

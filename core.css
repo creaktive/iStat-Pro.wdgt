@@ -1,0 +1,271 @@
+.barbg {
+	background-image:url(./images/common/bar_horizontal_bg.png);
+	height:8px;
+	overflow:hidden;
+}
+
+.verticalbarbg {
+	background-image:url(./images/common/bar_vertical_bg.png);
+	width:8px;
+	overflow:hidden;
+}
+
+canvas {
+	background-image:url(./images/common/graph_bg.png);
+}
+
+.smallcanvas {
+	background-image:url(./images/common/graph_bg_small.png);
+}
+
+.size {
+	font-size:8px;
+}
+
+.label {
+	color: #838383;
+}
+
+.line {
+	position:absolute;
+	height:12px;
+	overflow:hidden;
+	left:0px;
+	font:7.5pt "Lucida Grande";
+	font-weight: bold;			
+}
+
+.ellipsis {
+	text-overflow: ellipsis;
+	white-space: nowrap;
+	overflow: hidden;
+	font:7.5pt "Lucida Grande";
+	font-weight: bold;			
+}
+
+.filternamesel {
+	background-image:url(./images/back/display_highlight.png);
+	text-shadow: rgba(0,0,0,0.6) 0px 1px 0px;	
+}
+
+select, input {
+	opacity:0;
+	z-index:100;
+}
+
+.done {
+	position:absolute;
+	height:17px;
+	width:98px;
+	top:98px;
+	left:136px;
+	cursor:pointer;
+}
+
+.update {
+	position:absolute;
+	background-image:url(./images/back/button_update.png);
+	height:17px;
+	width:212px;
+	top:129px;
+	left:22px;
+	cursor:pointer;
+}
+
+.update:hover {
+	background-image:url(./images/back/button_update_rollie.png);
+}
+
+.paypal {
+	position:absolute;
+	background-image:url(./images/back/button_donate.png);
+	height:17px;
+	width:98px;
+	top:15px;
+	left:22px;
+	cursor:pointer;
+}
+
+.paypal:hover {
+	background-image:url(./images/back/button_donate_rollie.png);
+}
+
+.iphoneapps {
+	position:absolute;
+	background-image:url(./images/back/button_iphone.png);
+	height:17px;
+	width:98px;
+	top:15px;
+	left:136px;
+	cursor:pointer;
+}
+
+.iphoneapps:hover {
+	background-image:url(./images/back/button_iphone_rollie.png);
+}
+
+#ok {
+	background-image:url(./images/windows/button_ok.png);
+	height:24px;
+	width:64px;
+	float:left;
+}
+
+#no {
+	background-image:url(./images/windows/button_no_sml.png);
+	height:24px;
+	width:44px;
+	float:left;
+}
+#yes {
+	background-image:url(./images/windows/button_yes_sml.png);
+	height:24px;
+	width:44px;
+	float:left;
+}
+#skip {
+	background-image:url(./images/windows/button_skip_sml.png);
+	height:24px;
+	width:44px;
+	float:left;
+}
+
+#ok:hover {
+	background-image:url(./images/windows/button_ok_rollie.png);
+}
+
+#no:hover {
+	background-image:url(./images/windows/button_no_sml_rollie.png);
+}
+
+#yes:hover {
+	background-image:url(./images/windows/button_yes_sml_rollie.png);
+}
+
+#skip:hover {
+	background-image:url(./images/windows/button_skip_sml_rollie.png);
+}
+
+#iphoneinfobutton {
+	background-image:url(./images/windows/button_info.png);
+	height:24px;
+	width:64px;
+	float:left;
+}
+
+#iphoneinfobutton:hover {
+	background-image:url(./images/windows/button_info_rolie.png);
+}
+
+#iphoneok {
+	background-image:url(./images/windows/button_ok.png);
+	height:24px;
+	width:64px;
+	float:left;
+}
+
+#iphoneok:hover {
+	background-image:url(./images/windows/button_ok_rollie.png);
+}
+
+#display_scroller {
+    position: absolute;
+    top: 10px;
+    bottom: 10px;
+    left: 226px;
+    width: 19px;
+	height:85px;
+}
+#display_scrollarea {
+    position: absolute;
+    top: 10px;
+    bottom: 10px;
+    left: 100px;
+    right: 30px;
+}
+
+
+.scrollbar {
+	-apple-dashboard-region: dashboard-region(control rectangle);
+}
+
+.scrollerThumb .barTop {
+	background:url(./images/scrollbar/bartop.png) no-repeat;
+}
+
+.scrollerThumb .barMiddle {
+	background:url('./images/scrollbar/barmid.png') repeat-y top left;
+}
+
+.scrollerThumb .barBottom {
+	background:url(./images/scrollbar/barbottom.png) no-repeat;
+}
+
+.scrollerThumbActive .barTop {	
+	background:url(./images/scrollbar/bartop_down.png) no-repeat;
+}
+
+.scrollerThumbActive .barMiddle {
+	background:url('./images/scrollbar/barmid_down.png') repeat-y top left;
+}
+
+.scrollerThumbActive .barBottom {
+	background:url(./images/scrollbar/barbottom_down.png) no-repeat;
+}
+/* @end */
+
+.pppconnect {
+	position:absolute;
+	background-image:url(./images/button_netconnect.png);
+	height:12px;
+	width:116px;
+	-apple-dashboard-region: dashboard-region(control rectangle);
+}
+
+.pppconnect:active {
+	background-image:url(./images/button_netconnect_down.png);
+}
+
+.pppdisconnect {
+	position:absolute;
+	background-image:url(./images/button_netdisconnect.png);
+	height:12px;
+	width:116px;
+	-apple-dashboard-region: dashboard-region(control rectangle);
+}
+
+.pppdisconnect:active {
+	background-image:url(./images/button_netdisconnect_down.png);
+}
+
+.pppdisconnectOverlay {
+	-apple-dashboard-region: dashboard-region(control rectangle);
+	background-image:url(./images/button_networkeject.png);
+}
+
+.pppdisconnectOverlay:active {
+	background-image:url(./images/button_networkeject_down.png);
+}
+
+.diskicon {
+	-apple-dashboard-region: dashboard-region(control rectangle);
+	opacity:1;
+}
+
+.diskicon:active {
+	opacity:0.5;
+}
+
+.resetBandwidth {
+	background-image:url(./images/back/button_resetbandwidth.png);
+	width:212px;
+	height:17px;
+	position:absolute;
+	top:105px;
+	left:22px;
+	cursor:pointer;
+}
+
+.resetBandwidth:hover {
+	background-image:url(./images/back/button_resetbandwidth_rolie.png);
+}
