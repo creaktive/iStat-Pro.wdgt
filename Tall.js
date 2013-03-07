@@ -545,9 +545,9 @@ TallSkinController.prototype.updateProcesses = function(){
 		exclude = " grep -v DashboardClient | ";
 	
 	if(p.v("processes_sort_mode") == 'cpu')
-		widget.system('ps -arcwwwxo "pid %cpu command" | egrep "PID|$1" | grep -v grep | ' + exclude + ' head -7 | tail -6 | awk \'{print "<pid>"$1"</pid><cpu>"$2"</cpu><name>"$3,$4,$5"</name></item>"}\'', function(data){ _self.updateProcessesOut(data);});
+		widget.system('ps -arcwwwxo "pid %cpu command" | egrep "PID| $1" | grep -v grep | ' + exclude + ' head -7 | tail -6 | awk \'{print "<pid>"$1"</pid><cpu>"$2"</cpu><name>"$3,$4,$5"</name></item>"}\'', function(data){ _self.updateProcessesOut(data);});
 	else
-		widget.system('ps -amcwwwxo "pid rss command"  | egrep "PID|$1" | grep -v grep | ' + exclude + ' head -7 | tail -6 | awk \'{print "<pid>"$1"</pid><cpu>"$2"</cpu><name>"$3,$4,$5"</name></item>"}\'', function(data){ _self.updateProcessesOut(data);});
+		widget.system('ps -amcwwwxo "pid rss command"  | egrep "PID| $1" | grep -v grep | ' + exclude + ' head -7 | tail -6 | awk \'{print "<pid>"$1"</pid><cpu>"$2"</cpu><name>"$3,$4,$5"</name></item>"}\'', function(data){ _self.updateProcessesOut(data);});
 }
 
 TallSkinController.prototype.updateProcessesOut = function(data){
